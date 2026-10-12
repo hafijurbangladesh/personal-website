@@ -1,0 +1,65 @@
+---
+import { getImage } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Stats from '../components/Stats.astro';
+import About from '../components/About.astro';
+import Expertise from '../components/Expertise.astro';
+import SelectedWork from '../components/SelectedWork.astro';
+import Experience from '../components/Experience.astro';
+import Speaking from '../components/Speaking.astro';
+import Credentials from '../components/Credentials.astro';
+import Teaching from '../components/Teaching.astro';
+import LatestInsights from '../components/LatestInsights.astro';
+import Contact from '../components/Contact.astro';
+import profilePhoto from '../assets/images/profile.jpg';
+import { identity, currentRoles, education, expertise } from '../data/profile';
+import { siteConfig } from '../site.config';
+
+const siteUrl = new URL('/', Astro.site).href;
+const photo = await getImage({ src: profilePhoto, width: Math.min(800, profilePhoto.width), format: 'jpg' });
+
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': `${siteUrl}#person`,
+  name: identity.name,
+  url: siteUrl,
+  image: new URL(photo.src, Astro.site).href,
+  jobTitle: identity.jobTitle,
+  description: siteConfig.description,
+  email: `mailto:${identity.email}`,
+  telephone: identity.phone,
+  address: { '@type': 'PostalAddress', addressLocality: 'Dhaka', addressCountry: 'BD' },
+  sameAs: [identity.linkedin],
+  worksFor: currentRoles.map((r) => ({
+    '@type': r.org.includes('University') ? 'CollegeOrUniversity' : 'Organization',
+    name: r.org,
+  })),
+  hasOccupation: currentRoles.map((r) => ({ '@type': 'Occupation', name: r.title })),
+  alumniOf: education.map((e) => ({ '@type': 'CollegeOrUniversity', name: e.institution })),
+  knowsAbout: expertise.map((e) => e.title),
+};
+
+const website = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  url: siteUrl,
+  name: siteConfig.title,
+  publisher: { '@id': `${siteUrl}#person` },
+};
+---
+
+<BaseLayout type="profile" jsonLd={[person, website]}>
+  <Hero />
+  <Stats />
+  <About />
+  <Expertise />
+  <SelectedWork />
+  <Experience />
+  <Speaking />
+  <Credentials />
+  <Teaching />
+  <LatestInsights />
+  <Contact />
+</BaseLayout>

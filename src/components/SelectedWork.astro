@@ -1,0 +1,28 @@
+---
+import Section from './Section.astro';
+import Icon from './Icon.astro';
+import { getPublishedWork } from '../lib/content';
+
+const work = await getPublishedWork();
+---
+
+<Section id="work" eyebrow="Selected Work" title="National platforms and programmes">
+  <ul class="grid gap-4 md:grid-cols-2">
+    {
+      work.map((item) => (
+        <li class="card group relative flex flex-col p-6 transition-colors hover:border-accent">
+          {item.data.meta && <p class="text-xs font-medium text-muted">{item.data.meta}</p>}
+          <h3 class="mt-2 text-lg font-semibold text-ink">
+            <a href={`/work/${item.id}/`} class="after:absolute after:inset-0 group-hover:text-accent">
+              {item.data.title}
+            </a>
+          </h3>
+          <p class="mt-2 flex-1 text-sm leading-relaxed text-muted">{item.data.summary}</p>
+          <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-accent" aria-hidden="true">
+            Read case study <Icon name="arrow" size={16} class="transition-transform group-hover:translate-x-0.5" />
+          </span>
+        </li>
+      ))
+    }
+  </ul>
+</Section>

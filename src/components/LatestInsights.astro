@@ -1,0 +1,25 @@
+---
+import Section from './Section.astro';
+import InsightCard from './InsightCard.astro';
+import Icon from './Icon.astro';
+import { getPublishedInsights } from '../lib/content';
+
+const posts = (await getPublishedInsights()).slice(0, 3);
+---
+
+{
+  posts.length > 0 && (
+    <Section id="insights" eyebrow="Latest Insights" title="Notes on DPI, GovTech and AI in government">
+      <ul class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {posts.map((post) => (
+          <li>
+            <InsightCard post={post} />
+          </li>
+        ))}
+      </ul>
+      <a href="/insights/" class="mt-8 inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline">
+        All insights <Icon name="arrow" size={16} />
+      </a>
+    </Section>
+  )
+}

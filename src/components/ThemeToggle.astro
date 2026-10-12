@@ -1,0 +1,41 @@
+---
+import Icon from './Icon.astro';
+---
+
+<button
+  type="button"
+  data-theme-toggle
+  class="inline-flex size-9 items-center justify-center rounded-md text-muted hover:bg-accent-soft hover:text-accent"
+  aria-label="Dark mode"
+  aria-pressed="false"
+>
+  <Icon name="moon" class="dark:hidden" />
+  <Icon name="sun" class="hidden dark:block" />
+</button>
+
+<script>
+  const root = document.documentElement;
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]');
+  const sync = () => buttons.forEach((b) => b.setAttribute('aria-pressed', String(root.classList.contains('dark'))));
+  sync();
+  buttons.forEach((btn) =>
+    btn.addEventListener('click', () => {
+      const dark = root.classList.toggle('dark');
+      try {
+        localStorage.setItem('theme', dark ? 'dark' : 'light');
+      } catch {}
+      sync();
+    }),
+  );
+  // Follow the system setting while the visitor has not chosen a theme explicitly.
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    let stored: string | null = null;
+    try {
+      stored = localStorage.getItem('theme');
+    } catch {}
+    if (!stored) {
+      root.classList.toggle('dark', e.matches);
+      sync();
+    }
+  });
+</script>

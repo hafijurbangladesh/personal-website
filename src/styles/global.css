@@ -1,0 +1,116 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+@import '@fontsource-variable/inter';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Colour tokens. `--brand` is injected on <html> from `accent` in src/site.config.ts;
+ * every accent shade below is derived from it, so changing that one value re-themes the site.
+ */
+:root {
+  --brand: #0b2545;
+  --bg: #fafaf7;
+  --surface: #ffffff;
+  --text: #1a1f29;
+  --muted: #4f5866;
+  --border: #e3e3dc;
+  --accent: var(--brand);
+  --accent-soft: color-mix(in oklab, var(--brand) 7%, var(--bg));
+  --on-accent: #ffffff;
+  color-scheme: light;
+}
+
+:root.dark {
+  --bg: #0e1218;
+  --surface: #151a22;
+  --text: #e8eaee;
+  --muted: #a3abb8;
+  --border: #262d38;
+  --accent: color-mix(in oklab, var(--brand) 30%, #ffffff);
+  --accent-soft: color-mix(in oklab, var(--brand) 45%, var(--bg));
+  --on-accent: #0e1218;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-ink: var(--text);
+  --color-muted: var(--muted);
+  --color-line: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-on-accent: var(--on-accent);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-feature-settings: 'cv11', 'ss01';
+    text-rendering: optimizeLegibility;
+  }
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  ::selection {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-[1100px] px-5 sm:px-8;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2.5 text-sm font-medium transition-colors;
+  }
+  .btn-primary {
+    @apply bg-accent text-on-accent hover:opacity-90;
+  }
+  .btn-secondary {
+    @apply border border-line bg-surface text-ink hover:border-accent hover:text-accent;
+  }
+  .card {
+    @apply rounded-lg border border-line bg-surface;
+  }
+  .eyebrow {
+    @apply text-xs font-semibold tracking-[0.14em] text-accent uppercase;
+  }
+  .link {
+    @apply text-accent underline decoration-1 underline-offset-4 hover:decoration-2;
+  }
+}
+
+/* Long-form article typography mapped to the site tokens. */
+.prose-site {
+  --tw-prose-body: var(--text);
+  --tw-prose-headings: var(--text);
+  --tw-prose-lead: var(--muted);
+  --tw-prose-links: var(--accent);
+  --tw-prose-bold: var(--text);
+  --tw-prose-counters: var(--muted);
+  --tw-prose-bullets: var(--muted);
+  --tw-prose-hr: var(--border);
+  --tw-prose-quotes: var(--text);
+  --tw-prose-quote-borders: var(--accent);
+  --tw-prose-captions: var(--muted);
+  --tw-prose-code: var(--text);
+  --tw-prose-th-borders: var(--border);
+  --tw-prose-td-borders: var(--border);
+}

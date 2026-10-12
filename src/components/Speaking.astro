@@ -1,0 +1,45 @@
+---
+import { Picture } from 'astro:assets';
+import Section from './Section.astro';
+import { speaking } from '../data/profile';
+import { getImageByName } from '../lib/content';
+
+const engagements = speaking
+  .filter((e) => e.published !== false)
+  .sort((a, b) => b.year - a.year)
+  .map((e) => ({ ...e, image: e.photo ? getImageByName(e.photo) : undefined }));
+---
+
+<Section id="speaking" eyebrow="Speaking & Engagements" title="Conferences and panels">
+  <ul class="space-y-6">
+    {
+      engagements.map((e) => (
+        <li class="card overflow-hidden">
+          {e.image && (
+            <figure class="p-3 pb-0 sm:p-4 sm:pb-0">
+              <Picture
+                src={e.image}
+                alt={e.photoAlt ?? `${e.event} (${e.year})`}
+                formats={['avif', 'webp']}
+                widths={[480, 800, 1200, 1600, 2000].filter((w) => w <= e.image!.width)}
+                sizes="(min-width: 1100px) 1004px, calc(100vw - 64px)"
+                loading="lazy"
+                class="h-auto w-full rounded-md"
+              />
+              <figcaption class="mt-2 text-xs text-muted">
+                {e.event}, {e.year}
+              </figcaption>
+            </figure>
+          )}
+          <div class="p-6">
+            <p class="text-xs font-medium tracking-wide text-muted uppercase">
+              {e.year} · {e.role}
+            </p>
+            <h3 class="mt-1.5 font-semibold text-ink">{e.event}</h3>
+            {e.session && <p class="mt-1.5 text-sm text-muted">Session: “{e.session}”</p>}
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</Section>

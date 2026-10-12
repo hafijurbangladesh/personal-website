@@ -1,0 +1,21 @@
+---
+import Section from './Section.astro';
+import Icon from './Icon.astro';
+import { expertise } from '../data/profile';
+---
+
+<Section id="expertise" eyebrow="Expertise" title="Areas of expertise">
+  <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    {
+      expertise.map((item) => (
+        <li class="card p-6">
+          <span class="inline-flex size-10 items-center justify-center rounded-md bg-accent-soft text-accent">
+            <Icon name={item.icon} />
+          </span>
+          <h3 class="mt-4 font-semibold text-ink">{item.title}</h3>
+          <p class="mt-2 text-sm leading-relaxed text-muted">{item.description}</p>
+        </li>
+      ))
+    }
+  </ul>
+</Section>
