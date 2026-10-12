@@ -9,7 +9,7 @@ const recent = experience.slice(0, VISIBLE);
 const earlier = experience.slice(VISIBLE);
 ---
 
-<Section id="experience" eyebrow="Experience" title="Career timeline">
+<Section id="experience" eyebrow="Experience" title="Career timeline" split>
   <ol class="relative ml-1.5 border-l border-line">
     {recent.map((role) => <RoleItem role={role} />)}
   </ol>

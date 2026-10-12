@@ -4,17 +4,25 @@ interface Props {
   eyebrow?: string;
   title: string;
   intro?: string;
+  /** Wide screens: heading in a left column, content filling the right. */
+  split?: boolean;
   class?: string;
 }
 
-const { id, eyebrow, title, intro, class: className } = Astro.props;
+const { id, eyebrow, title, intro, split = false, class: className } = Astro.props;
 ---
 
-<section id={id} aria-labelledby={`${id}-title`} class:list={['container-page py-16 sm:py-20', className]}>
-  <header class="mb-10 max-w-2xl">
+<section
+  id={id}
+  aria-labelledby={`${id}-title`}
+  class:list={['container-page py-14 sm:py-16', split && 'lg:grid lg:grid-cols-12 lg:gap-12', className]}
+>
+  <header class:list={['mb-8 sm:mb-10', split ? 'lg:sticky lg:top-24 lg:col-span-4 lg:mb-0 lg:self-start' : 'max-w-2xl']}>
     {eyebrow && <p class="eyebrow mb-3">{eyebrow}</p>}
-    <h2 id={`${id}-title`} class="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">{title}</h2>
+    <h2 id={`${id}-title`} class="text-2xl font-semibold tracking-tight text-balance text-ink sm:text-3xl">{title}</h2>
     {intro && <p class="mt-3 text-muted">{intro}</p>}
   </header>
-  <slot />
+  <div class:list={[split && 'lg:col-span-8']}>
+    <slot />
+  </div>
 </section>

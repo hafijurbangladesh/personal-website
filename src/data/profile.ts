@@ -13,6 +13,8 @@ export const identity = {
     'Technology & Digital Transformation Specialist | Digital Public Infrastructure (DPI) | GovTech | Enterprise Architecture | AI & Digital Government',
   /** Short job title used in SEO / JSON-LD. */
   jobTitle: 'Technology & Digital Transformation Specialist',
+  /** Words in the main title shown in the highlight colour on the hero (must appear in `headline`). */
+  headlineHighlight: 'Digital Transformation',
   tagline:
     'Translating policy and institutional priorities into scalable, interoperable, citizen-centric digital government.',
   location: 'Dhaka, Bangladesh',

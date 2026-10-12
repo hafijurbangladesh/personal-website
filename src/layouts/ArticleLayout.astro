@@ -1,13 +1,14 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import Icon from '../components/Icon.astro';
-import { identity } from '../data/profile';
 
 interface Props {
   title: string;
   description: string;
   eyebrow?: string;
-  meta?: string;
+  /** Short facts shown in the sidebar, e.g. role or publication date. */
+  details?: { label: string; value: string }[];
+  tags?: string[];
   backHref: string;
   backLabel: string;
   publishedTime?: Date;
@@ -15,7 +16,18 @@ interface Props {
   jsonLd?: Record<string, unknown>[];
 }
 
-const { title, description, eyebrow, meta, backHref, backLabel, publishedTime, modifiedTime, jsonLd } = Astro.props;
+const {
+  title,
+  description,
+  eyebrow,
+  details = [],
+  tags = [],
+  backHref,
+  backLabel,
+  publishedTime,
+  modifiedTime,
+  jsonLd,
+} = Astro.props;
 ---
 
 <BaseLayout
@@ -35,19 +47,45 @@ const { title, description, eyebrow, meta, backHref, backLabel, publishedTime, m
     </nav>
     <header class="mt-8 max-w-3xl">
       {eyebrow && <p class="eyebrow mb-3">{eyebrow}</p>}
-      <h1 class="text-3xl font-semibold tracking-tight text-ink sm:text-4xl">{title}</h1>
-      <p class="mt-4 text-lg leading-relaxed text-muted">{description}</p>
-      {meta && <p class="mt-4 text-sm text-muted">{meta}</p>}
+      <h1 class="text-3xl font-semibold tracking-tight text-balance text-ink sm:text-4xl">{title}</h1>
+      <p class="mt-4 text-lg leading-relaxed text-pretty text-muted">{description}</p>
     </header>
-    <div
-      class="prose prose-site mt-10 max-w-3xl border-t border-line pt-10 prose-headings:font-semibold prose-headings:tracking-tight prose-a:underline-offset-4"
-    >
-      <slot />
+
+    <div class="mt-10 border-t border-line pt-10 lg:grid lg:grid-cols-12 lg:gap-12">
+      <div
+        class="prose prose-site max-w-none lg:col-span-8 prose-headings:font-semibold prose-headings:tracking-tight prose-a:underline-offset-4"
+      >
+        <slot />
+      </div>
+
+      <aside class="mt-12 lg:sticky lg:top-24 lg:col-span-4 lg:mt-0 lg:self-start">
+        <div class="card space-y-5 p-6">
+          {
+            details.map((d) => (
+              <div>
+                <p class="text-xs font-medium tracking-wide text-muted uppercase">{d.label}</p>
+                <p class="mt-1 text-sm text-ink">{d.value}</p>
+              </div>
+            ))
+          }
+          {
+            tags.length > 0 && (
+              <div>
+                <p class="text-xs font-medium tracking-wide text-muted uppercase">Topics</p>
+                <ul class="mt-2 flex flex-wrap gap-1.5">
+                  {tags.map((t) => (
+                    <li class="rounded-full bg-accent-soft px-2.5 py-0.5 text-xs text-accent">{t}</li>
+                  ))}
+                </ul>
+              </div>
+            )
+          }
+          <div class:list={[(details.length > 0 || tags.length > 0) && 'border-t border-line pt-5']}>
+            <p class="text-sm text-muted">Want to discuss this?</p>
+            <a href="/#contact" class="btn btn-primary mt-3 w-full">Get in touch</a>
+          </div>
+        </div>
+      </aside>
     </div>
-    <footer class="mt-14 max-w-3xl border-t border-line pt-8">
-      <p class="text-sm text-muted">
-        Want to discuss this? <a href="/#contact" class="link">Get in touch with {identity.shortName}</a>.
-      </p>
-    </footer>
   </article>
 </BaseLayout>

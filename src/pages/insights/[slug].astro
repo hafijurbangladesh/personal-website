@@ -29,7 +29,12 @@ const article = {
   title={title}
   description={description}
   eyebrow="Insight"
-  meta={`${formatDate(pubDate)}${updatedDate ? ` · Updated ${formatDate(updatedDate)}` : ''}`}
+  details={[
+    { label: 'Published', value: formatDate(pubDate) },
+    ...(updatedDate ? [{ label: 'Updated', value: formatDate(updatedDate) }] : []),
+    { label: 'Author', value: identity.name },
+  ]}
+  tags={post.data.tags}
   backHref="/insights/"
   backLabel="All insights"
   publishedTime={pubDate}

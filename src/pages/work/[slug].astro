@@ -10,13 +10,22 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
+
+// meta is "Role · Organisation · Period".
+const [role, org, period] = (entry.data.meta ?? '').split(' · ');
+const details = [
+  { label: 'Role', value: role },
+  { label: 'Organisation', value: org },
+  { label: 'Period', value: period },
+].filter((d) => d.value);
 ---
 
 <ArticleLayout
   title={entry.data.title}
   description={entry.data.summary}
   eyebrow="Case study"
-  meta={entry.data.meta}
+  details={details}
+  tags={entry.data.tags}
   backHref="/#work"
   backLabel="All selected work"
 >

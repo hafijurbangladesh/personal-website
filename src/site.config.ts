@@ -5,6 +5,9 @@ export const siteConfig = {
   /** The single brand accent colour. All accent tints (incl. dark mode) are derived from it. */
   accent: '#0B2545',
 
+  /** Highlight colour used on the dark hero panel (title highlight, primary hero button, decorations). */
+  highlight: '#F2C14E',
+
   title: 'Md. Hafijur Rahman',
   description:
     'Technology & Digital Transformation Specialist working on Digital Public Infrastructure, GovTech, enterprise architecture and responsible AI in government.',

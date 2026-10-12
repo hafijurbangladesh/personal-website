@@ -18,6 +18,9 @@
   --accent: var(--brand);
   --accent-soft: color-mix(in oklab, var(--brand) 7%, var(--bg));
   --on-accent: #ffffff;
+  --highlight: #f2c14e;
+  /* Hero panel: the brand colour in light mode, a slightly lifted dark tone in dark mode. */
+  --hero-bg: var(--brand);
   color-scheme: light;
 }
 
@@ -30,6 +33,7 @@
   --accent: color-mix(in oklab, var(--brand) 30%, #ffffff);
   --accent-soft: color-mix(in oklab, var(--brand) 45%, var(--bg));
   --on-accent: #0e1218;
+  --hero-bg: color-mix(in oklab, var(--brand) 55%, #0e1218);
   color-scheme: dark;
 }
 
@@ -43,6 +47,8 @@
   --color-accent: var(--accent);
   --color-accent-soft: var(--accent-soft);
   --color-on-accent: var(--on-accent);
+  --color-highlight: var(--highlight);
+  --color-hero: var(--hero-bg);
 }
 
 @layer base {

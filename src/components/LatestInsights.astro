@@ -10,7 +10,7 @@ const posts = (await getPublishedInsights()).slice(0, 3);
 {
   posts.length > 0 && (
     <Section id="insights" eyebrow="Latest Insights" title="Notes on DPI, GovTech and AI in government">
-      <ul class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <ul class:list={['grid gap-4 md:grid-cols-2', posts.length >= 3 && 'lg:grid-cols-3']}>
         {posts.map((post) => (
           <li>
             <InsightCard post={post} />
