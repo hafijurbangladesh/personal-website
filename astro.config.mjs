@@ -6,7 +6,7 @@ import { loadEnv } from 'vite';
 
 const env = loadEnv(process.env.NODE_ENV ?? 'production', process.cwd(), '');
 // Canonical site URL: set SITE_URL in .env / Cloudflare Pages. TODO: replace the fallback with your custom domain.
-const site = (env.SITE_URL || process.env.SITE_URL || 'https://hafijur.pages.dev').replace(/\/$/, '');
+const site = (env.SITE_URL || process.env.SITE_URL || 'https://personal-website-1ca.pages.dev').replace(/\/$/, '');
 
 export default defineConfig({
   site,

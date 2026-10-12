@@ -101,7 +101,7 @@ Copy `.env.example` to `.env` for local builds, and add the same variables in Cl
    - **Build output directory:** `dist`
 4. Under **Environment variables** (Production), add:
    - `NODE_VERSION` = `22`
-   - `SITE_URL` = your final URL (use `https://<project>.pages.dev` until a custom domain is connected)
+   - `SITE_URL` = your final URL (currently `https://personal-website-1ca.pages.dev`; change it when a custom domain is connected)
    - `PUBLIC_FORMSPREE_ID` and `PUBLIC_CF_BEACON_TOKEN` (optional)
 5. Click **Save and Deploy**. Every push to the main branch redeploys the site automatically.
 
