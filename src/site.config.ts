@@ -15,6 +15,8 @@ export const siteConfig = {
 
   /** Path to the downloadable CV in /public. */
   cvPath: '/cv.pdf',
+  /** Set to true once public/cv.pdf exists. While false, the Download CV button is shown but inactive. */
+  cvAvailable: false,
 
   /** Primary navigation (anchors on the home page). */
   nav: [

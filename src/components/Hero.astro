@@ -136,9 +136,22 @@ const rail = [
           >
             Get in touch
           </a>
-          <a href={siteConfig.cvPath} class="btn border border-white/30 text-white hover:bg-white/10" download>
-            <Icon name="download" size={16} /> Download CV
-          </a>
+          {
+            siteConfig.cvAvailable ? (
+              <a href={siteConfig.cvPath} class="btn border border-white/30 text-white hover:bg-white/10" download>
+                <Icon name="download" size={16} /> Download CV
+              </a>
+            ) : (
+              <span
+                class="btn cursor-not-allowed border border-white/15 text-white/45 select-none"
+                aria-disabled="true"
+                title="CV coming soon"
+              >
+                <Icon name="download" size={16} /> Download CV
+                <span class="sr-only">(coming soon)</span>
+              </span>
+            )
+          }
           <a
             href={identity.linkedin}
             class="btn text-white/85 hover:text-highlight lg:hidden"
